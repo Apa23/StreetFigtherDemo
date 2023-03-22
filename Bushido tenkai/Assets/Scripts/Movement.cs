@@ -39,13 +39,15 @@ public class Movement : MonoBehaviour
     void Update()
     {
         dirX = Input.GetAxis("Horizontal") * speed;//Toma la dirección de movimiento y le da velocidad.
-        animator.SetFloat("Horizontal",Mathf.Abs(dirX));//Envia al animator la velocidad del pnje.
+        animator.SetFloat("Speed",Mathf.Abs(dirX));//Envia al animator la velocidad del pnje.
 
         
 
-        if (Input.GetButtonDown("Jump")) //Detecta salto
+        if (Input.GetButtonDown("Jump") && animator.GetBool("IsJumping")==false ) //Detecta salto
         {
+            animator.SetBool(("IsJumping"),true);
             Jump = true;
+
         }
 
     }
