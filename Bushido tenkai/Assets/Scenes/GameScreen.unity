@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 683700194}
   m_Layer: 3
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966385368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.003, y: -0.249, z: 0}
+  m_LocalPosition: {x: 0.464, y: 0.031, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -326,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548304258}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.278, y: -0.29, z: 0.07568929}
+  m_LocalPosition: {x: -2.09, y: -0.568, z: 0.07568929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -347,7 +347,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.020736933, y: -0.002304107}
+  m_Offset: {x: 0.3829182, y: 0.5410187}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -358,7 +358,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31136084, y: 0.52028173}
+  m_Size: {x: 0.77469176, y: 1.083467}
   m_EdgeRadius: 0
 --- !u!50 &1548304261
 Rigidbody2D:
@@ -395,12 +395,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.8
   JumpForce: 250
-  Floor:
-    serializedVersion: 2
-    m_Bits: 8
-  FloorController: {fileID: 966385369}
-  BoxDimensions: {x: 0.7, y: 0.07, z: 0}
-  OnFloor: 0
 --- !u!212 &1548304263
 SpriteRenderer:
   m_ObjectHideFlags: 0

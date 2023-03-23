@@ -12,16 +12,11 @@ public class Movement : MonoBehaviour
     [Header("Jump")]
     [SerializeField]
     private float JumpForce;
-    [SerializeField]
-    private LayerMask Floor;
-    [SerializeField]
-    private Transform FloorController;
-    [SerializeField]
-    private Vector3 BoxDimensions;//Una caja que nos permitira saber cuando estemos en el piso.
-    [SerializeField]
-    private bool OnFloor;
-    
+
+    private bool CanAttackAgain = false;
+    private bool Attack = false;
     private bool Jump = false;
+
 
     [Header("Animation")]
 
@@ -50,27 +45,69 @@ public class Movement : MonoBehaviour
 
         }
 
+        if (Input.GetButtonDown("Fire1"))//detecta atacar.
+        {
+            Attack = true;
+            
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+            {
+                // El jugador ha presionado el botón de ataque mientras se estaba reproduciendo la animación del primer ataque
+                CanAttackAgain = true;
+            }
+            
+
+
+        }
+            
+
+
     }
 
     private void FixedUpdate()
     {
-        OnFloor = Physics2D.OverlapBox(FloorController.position, BoxDimensions, 0f, Floor);//Estamos en suelo mientras la caja toque suelo
-        animator.SetBool("OnFloor", OnFloor);//Envia al animator si el pnje esta en suelo o no.
-        animator.SetFloat("JumpVelocity", rb2D.velocity.y);//envia al animator la velocidad en componente y para transicionar.
-        if (OnFloor && Jump)
+
+        if (Attack)
         {
-            ActionJump();
+            animator.SetBool("IsAttacking", true); //Inicia animación de ataque
+
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f) // Verifica si la animación ya acabo.
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation") && CanAttackAgain) // Verifica si se puede realizar un segundo ataque.
+                {
+                    animator.SetBool("DobleAttack", true); //Inicia un segundo ataque.
+                    CanAttackAgain = false; // No se permite hacer otro ataque hasta que la animación termine.
+                }
+                else
+                {
+                    Attack = false;
+                    animator.SetBool("IsAttacking", false);
+                }
+                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f && animator.GetCurrentAnimatorStateInfo(0).IsName("Attack2Animation"))
+                {
+                    animator.SetBool("IsAttacking", false);  // desactiva el parámetro de ataque 1 en el animator
+                    animator.SetBool("DobleAttack", false);  // desactiva el parámetro de ataque 2 en el animator
+                    Attack = false;
+                    CanAttackAgain = false;
+                }
+            }
+        }
+        animator.SetFloat("JumpVelocity", rb2D.velocity.y);//envia al animator la velocidad en componente y para transicionar.
+        if (Jump)
+        {   
+            ActionJump();//SALTA!
         }
         if (dirX != 0)
         {
-            ActionMove();
+            ActionMove(); //Muevete!
         }
+       
+      
         
     }
     private void ActionJump()//Realiza el salto
     {
         
-        OnFloor = false;
+     
         Jump = false;
         rb2D.AddForce(new Vector2(0f, JumpForce));//Agregamos una fuerza vertical
 
@@ -80,11 +117,16 @@ public class Movement : MonoBehaviour
         transform.position += new Vector3(dirX, 0, 0) * Time.fixedDeltaTime;
     }
 
-    private void OnDrawGizmos()//Nos permite ver la caja que controla si estamos en suelo o no.
+
+    private void OnCollisionEnter2D(Collision2D other) //Detecta la colision con el suelo
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(FloorController.position, BoxDimensions);
+        if (other.collider.CompareTag("Floor"))
+        {
+            animator.SetBool("IsJumping", false);//desactiva el salto, para poder pasar a otra animación.
+        }
     }
+
+ 
 
 }
       
