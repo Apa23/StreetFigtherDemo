@@ -1892,7 +1892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd7772ee31fc342b41c58ab5b894c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TotalHealthPoints>k__BackingField: 2
+  <TotalHealthPoints>k__BackingField: 5
   attackPoint: {fileID: 840168234}
   attackRange: 0.68
   enemyLayer:
@@ -2404,7 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd7772ee31fc342b41c58ab5b894c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TotalHealthPoints>k__BackingField: 1
+  <TotalHealthPoints>k__BackingField: 10
   attackPoint: {fileID: 225294871}
   attackRange: 0.35
   enemyLayer:
