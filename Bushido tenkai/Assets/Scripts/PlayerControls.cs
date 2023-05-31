@@ -53,13 +53,31 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash Forward"",
+                    ""type"": ""Button"",
+                    ""id"": ""1d7afaff-2939-4ad5-a01f-18134adcacea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash Backward"",
+                    ""type"": ""Button"",
+                    ""id"": ""1aa6a69d-4d82-4c7b-89d3-cfee163d5971"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""730c75b6-b1be-4fb7-af68-bbf307ac8c18"",
-                    ""path"": ""<HID::Twin USB Gamepad      >/stick"",
+                    ""id"": ""e16332e0-ea30-4df0-9a61-90b3e2c71a2a"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/hat"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -88,6 +106,158 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5bb0578-4933-4008-820f-4ecf15c82337"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/hat/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash Forward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff4d0439-30ff-4111-9b60-8fb1f71c0e80"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/hat/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash Backward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gameplay2"",
+            ""id"": ""89ab370a-9348-4b25-9c7b-0d90856e25c0"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""d3078f46-567c-484f-a1f0-7186fdf91fc6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""c756ac06-791c-4811-a29d-18c11b2901c5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""786ec743-484c-48f5-894d-5fda6d839194"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash Forward"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5998443-a280-4872-abcd-1aa754b4de38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash Backward"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae253f32-b401-46d1-9d2e-cd60ffbeac47"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Keys"",
+                    ""id"": ""ccfa0cc4-69ac-4efe-b418-6ea475f6b768"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""970ebd16-1c45-476f-b84a-49828de0bf45"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""55789e53-4f30-4d1e-a7fa-8de17d973132"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9d9b3b2-f2c8-4483-9e3f-2f8945ca54dc"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3833efa5-d1ad-49ee-89c3-cfaa3887a02a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a124a7db-92a7-4722-9776-4b4356036e2f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash Forward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0c41d4f-aefe-4808-ae2d-9f29f17a16bd"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash Backward"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +269,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
+        m_Gameplay_DashForward = m_Gameplay.FindAction("Dash Forward", throwIfNotFound: true);
+        m_Gameplay_DashBackward = m_Gameplay.FindAction("Dash Backward", throwIfNotFound: true);
+        // Gameplay2
+        m_Gameplay2 = asset.FindActionMap("Gameplay2", throwIfNotFound: true);
+        m_Gameplay2_Move = m_Gameplay2.FindAction("Move", throwIfNotFound: true);
+        m_Gameplay2_Jump = m_Gameplay2.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay2_Attack = m_Gameplay2.FindAction("Attack", throwIfNotFound: true);
+        m_Gameplay2_DashForward = m_Gameplay2.FindAction("Dash Forward", throwIfNotFound: true);
+        m_Gameplay2_DashBackward = m_Gameplay2.FindAction("Dash Backward", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +342,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Attack;
+    private readonly InputAction m_Gameplay_DashForward;
+    private readonly InputAction m_Gameplay_DashBackward;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -170,6 +351,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
+        public InputAction @DashForward => m_Wrapper.m_Gameplay_DashForward;
+        public InputAction @DashBackward => m_Wrapper.m_Gameplay_DashBackward;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +371,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @DashForward.started += instance.OnDashForward;
+            @DashForward.performed += instance.OnDashForward;
+            @DashForward.canceled += instance.OnDashForward;
+            @DashBackward.started += instance.OnDashBackward;
+            @DashBackward.performed += instance.OnDashBackward;
+            @DashBackward.canceled += instance.OnDashBackward;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -201,6 +390,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @DashForward.started -= instance.OnDashForward;
+            @DashForward.performed -= instance.OnDashForward;
+            @DashForward.canceled -= instance.OnDashForward;
+            @DashBackward.started -= instance.OnDashBackward;
+            @DashBackward.performed -= instance.OnDashBackward;
+            @DashBackward.canceled -= instance.OnDashBackward;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -218,10 +413,98 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Gameplay2
+    private readonly InputActionMap m_Gameplay2;
+    private List<IGameplay2Actions> m_Gameplay2ActionsCallbackInterfaces = new List<IGameplay2Actions>();
+    private readonly InputAction m_Gameplay2_Move;
+    private readonly InputAction m_Gameplay2_Jump;
+    private readonly InputAction m_Gameplay2_Attack;
+    private readonly InputAction m_Gameplay2_DashForward;
+    private readonly InputAction m_Gameplay2_DashBackward;
+    public struct Gameplay2Actions
+    {
+        private @PlayerControls m_Wrapper;
+        public Gameplay2Actions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Gameplay2_Move;
+        public InputAction @Jump => m_Wrapper.m_Gameplay2_Jump;
+        public InputAction @Attack => m_Wrapper.m_Gameplay2_Attack;
+        public InputAction @DashForward => m_Wrapper.m_Gameplay2_DashForward;
+        public InputAction @DashBackward => m_Wrapper.m_Gameplay2_DashBackward;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(Gameplay2Actions set) { return set.Get(); }
+        public void AddCallbacks(IGameplay2Actions instance)
+        {
+            if (instance == null || m_Wrapper.m_Gameplay2ActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_Gameplay2ActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+            @DashForward.started += instance.OnDashForward;
+            @DashForward.performed += instance.OnDashForward;
+            @DashForward.canceled += instance.OnDashForward;
+            @DashBackward.started += instance.OnDashBackward;
+            @DashBackward.performed += instance.OnDashBackward;
+            @DashBackward.canceled += instance.OnDashBackward;
+        }
+
+        private void UnregisterCallbacks(IGameplay2Actions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+            @DashForward.started -= instance.OnDashForward;
+            @DashForward.performed -= instance.OnDashForward;
+            @DashForward.canceled -= instance.OnDashForward;
+            @DashBackward.started -= instance.OnDashBackward;
+            @DashBackward.performed -= instance.OnDashBackward;
+            @DashBackward.canceled -= instance.OnDashBackward;
+        }
+
+        public void RemoveCallbacks(IGameplay2Actions instance)
+        {
+            if (m_Wrapper.m_Gameplay2ActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGameplay2Actions instance)
+        {
+            foreach (var item in m_Wrapper.m_Gameplay2ActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_Gameplay2ActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public Gameplay2Actions @Gameplay2 => new Gameplay2Actions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnDashForward(InputAction.CallbackContext context);
+        void OnDashBackward(InputAction.CallbackContext context);
+    }
+    public interface IGameplay2Actions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
+        void OnDashForward(InputAction.CallbackContext context);
+        void OnDashBackward(InputAction.CallbackContext context);
     }
 }

@@ -12,7 +12,6 @@ public class Player : MonoBehaviour, IDamageable
 
     // Movement aux variables
     private bool _canJump = false;
-    private bool _canAttack = false;
 
     // Attack point reference
     public Transform attackPoint;
@@ -22,6 +21,7 @@ public class Player : MonoBehaviour, IDamageable
     // Input Interface attributes
     private PlayerControls _playerControls;
     private Vector2 _move;
+    private Vector2 _dash;
 
     // Animator component
     [Header("Animation")]
@@ -36,15 +36,43 @@ public class Player : MonoBehaviour, IDamageable
         // Set up input controller
         _playerControls = new PlayerControls();
 
-        // Move input and callbacks
-        _playerControls.Gameplay.Move.performed += ctx => CheckMove(ctx);
-        _playerControls.Gameplay.Move.canceled += ctx => _move = Vector2.zero;
+        if (gameObject.name == "Player1")
+        {
 
-        // Jump input
-        _playerControls.Gameplay.Jump.performed += ctx => CheckJump();
+            // Move input and callbacks
+            _playerControls.Gameplay.Move.performed += ctx => CheckMove(ctx);
+            _playerControls.Gameplay.Move.canceled += ctx => _move = Vector2.zero;
 
-        // Attack input
-        _playerControls.Gameplay.Attack.performed += ctx => CheckAttack();
+            // Dash input and callbacks
+            _playerControls.Gameplay.DashForward.performed += ctx => CheckDashForward();
+            _playerControls.Gameplay.DashBackward.performed += ctx => CheckDashBackward();
+            _playerControls.Gameplay.DashForward.canceled += ctx => _dash = Vector2.zero; ;
+            _playerControls.Gameplay.DashBackward.canceled += ctx => _dash = Vector2.zero; ;
+
+            // Jump input
+            _playerControls.Gameplay.Jump.performed += ctx => CheckJump();
+
+            // Attack input
+            _playerControls.Gameplay.Attack.performed += ctx => CheckAttack();
+        }
+        else if (gameObject.name == "Player2")
+        {
+
+            // Move input and callbacks
+            _playerControls.Gameplay2.Move.performed += ctx => CheckMove(ctx);
+            _playerControls.Gameplay2.Move.canceled += ctx => _move = Vector2.zero;
+
+            // Dash input and callbacks
+            _playerControls.Gameplay2.DashForward.performed += ctx => CheckDashForward();
+            _playerControls.Gameplay2.DashBackward.performed += ctx => CheckDashBackward();
+
+            // Jump input
+            _playerControls.Gameplay2.Jump.performed += ctx => CheckJump();
+
+            // Attack input
+            _playerControls.Gameplay2.Attack.performed += ctx => CheckAttack();
+        }
+
     }
     private void Start()
     {
@@ -72,47 +100,78 @@ public class Player : MonoBehaviour, IDamageable
             ActionJump();
         }
         ActionMove();
-
-        if (_canAttack)
-        {
-
-            _canAttack = false;
-            _animator.SetBool("IsAttacking", false);
-        }
+        ActionDash();
 
     }
 
     private void OnEnable() //Enable input controls
     {
+
         _playerControls.Gameplay.Enable();
+
+        _playerControls.Gameplay2.Enable();
+
     }
 
     private void OnDisable() //Disable input controls
     {
+
         _playerControls.Gameplay.Disable();
+
+        _playerControls.Gameplay2.Disable();
+
+
     }
 
-    private void CheckAttack() //Detect attack and active the animation
+
+
+
+    private void CheckMove(InputAction.CallbackContext ctx) //Detect movement and activate the animation
     {
-        if (_animator.GetBool("IsAttacking") == false)
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
-            _move = Vector2.zero;
-            _canAttack = true;
-            _animator.SetBool("IsAttacking", true);
-            _animator.SetInteger("ComboAttack", 1);
-            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-
-            foreach (Collider2D enemy in hitEnemys)
-            {
-                if (enemy.transform.TryGetComponent(out IDamageable targetHit))
-                {
-                    targetHit.TakeHit();
-                }
-            }
+            _move = ctx.ReadValue<Vector2>();
         }
+    }
+
+    private void ActionMove()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    {
+        Vector2 dir = new Vector2(_move.x * 2, 0) * Time.deltaTime;
+        transform.Translate(dir, Space.World);
+        _animator.SetFloat("Speed", Mathf.Abs(dir.x));
+    }
+
+    private void CheckDashForward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    {
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+        {
+            _animator.SetBool("Dash", true);
+            _dash = new Vector2(7, 0) * Time.deltaTime;
+        }
+    }
+    private void CheckDashBackward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    {
+        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+        {
+            _animator.SetBool("Dash", true);
+            _dash = new Vector2(-7, 0) * Time.deltaTime;
+        }
+    }
+
+    private void ActionDash()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    {
+        transform.Translate(_dash, Space.World);
+    }
+
+    private void DashEnd()
+    {
+        Debug.Log("Dash End");
+        _dash = Vector2.zero;
+        _animator.SetBool("Dash", false);
 
 
     }
+
     private void CheckJump() //Detect jump and active the animation
     {
         if (_animator.GetBool("IsJumping") == false)
@@ -128,25 +187,38 @@ public class Player : MonoBehaviour, IDamageable
         _rb2D.AddForce(new Vector2(0f, 300));
     }
 
-    private void CheckMove(InputAction.CallbackContext ctx)
+
+    private void CheckAttack() //Detect attack and active the animation
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+
+        if (_animator.GetBool("IsAttacking") == false)
         {
-            _move = ctx.ReadValue<Vector2>();
+            _animator.SetBool("IsAttacking", true);
+            _animator.SetInteger("ComboAttack", 1);
+            _move = Vector2.zero;
         }
+    }
 
-    } //Detect
-
-    private void ActionMove()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    private void ActionAttack()
     {
-        Vector2 dir = new Vector2(_move.x * 2, 0) * Time.deltaTime;
-        transform.Translate(dir, Space.World);
-        _animator.SetFloat("Speed", Mathf.Abs(dir.x));
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+
+        foreach (Collider2D enemy in hitEnemys)
+        {
+            if (enemy.transform.TryGetComponent(out IDamageable targetHit))
+            {
+                targetHit.TakeHit();
+            }
+        }
+    }
+    private void AttackEnd()
+    {
+        Debug.Log("Attack End");
+        _animator.SetBool("IsAttacking", false);
     }
 
     public void TakeHit() // Decrese the health points when hitted
     {
-
         if (HealthPoints <= 0)
         {
             return;
@@ -160,7 +232,9 @@ public class Player : MonoBehaviour, IDamageable
 
         if (HealthPoints <= 0)
         {
+
             _playerControls.Gameplay.Disable();
+            _playerControls.Gameplay2.Disable();
             return;
         }
 
