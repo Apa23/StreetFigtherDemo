@@ -6,4 +6,5 @@ public interface IDamageable
     public int HealthPoints { get; }
     
     public void TakeHit();
+    public void EndHit();
 }
