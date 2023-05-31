@@ -46,8 +46,8 @@ public class Player : MonoBehaviour, IDamageable
             // Dash input and callbacks
             _playerControls.Gameplay.DashForward.performed += ctx => CheckDashForward();
             _playerControls.Gameplay.DashBackward.performed += ctx => CheckDashBackward();
-            _playerControls.Gameplay.DashForward.canceled += ctx => _dash = Vector2.zero; ;
-            _playerControls.Gameplay.DashBackward.canceled += ctx => _dash = Vector2.zero; ;
+            _playerControls.Gameplay.DashForward.canceled += ctx => _dash = Vector2.zero;
+            _playerControls.Gameplay.DashBackward.canceled += ctx => _dash = Vector2.zero;
 
             // Jump input
             _playerControls.Gameplay.Jump.performed += ctx => CheckJump();
@@ -65,6 +65,8 @@ public class Player : MonoBehaviour, IDamageable
             // Dash input and callbacks
             _playerControls.Gameplay2.DashForward.performed += ctx => CheckDashForward();
             _playerControls.Gameplay2.DashBackward.performed += ctx => CheckDashBackward();
+            _playerControls.Gameplay2.DashForward.canceled += ctx => _dash = Vector2.zero;
+            _playerControls.Gameplay2.DashBackward.canceled += ctx => _dash = Vector2.zero;
 
             // Jump input
             _playerControls.Gameplay2.Jump.performed += ctx => CheckJump();
@@ -115,15 +117,9 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnDisable() //Disable input controls
     {
-
         _playerControls.Gameplay.Disable();
-
         _playerControls.Gameplay2.Disable();
-
-
     }
-
-
 
 
     private void CheckMove(InputAction.CallbackContext ctx) //Detect movement and activate the animation
@@ -146,7 +142,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
             _animator.SetBool("Dash", true);
-            _dash = new Vector2(7, 0) * Time.deltaTime;
+            _dash = new Vector2(transform.position.x + 50, 0) * Time.deltaTime;
         }
     }
     private void CheckDashBackward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
@@ -154,7 +150,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
             _animator.SetBool("Dash", true);
-            _dash = new Vector2(-7, 0) * Time.deltaTime;
+            _dash = new Vector2(transform.position.x - 50, 0) * Time.deltaTime;
         }
     }
 
@@ -168,8 +164,6 @@ public class Player : MonoBehaviour, IDamageable
         Debug.Log("Dash End");
         _dash = Vector2.zero;
         _animator.SetBool("Dash", false);
-
-
     }
 
     private void CheckJump() //Detect jump and active the animation
@@ -225,11 +219,8 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         _animator.SetBool("IsHited", true);
-        Debug.Log("hit");
         HealthPoints--;
         _animator.SetInteger("HP", HealthPoints);
-        _animator.SetBool("IsHited", false);
-
         if (HealthPoints <= 0)
         {
 
@@ -239,6 +230,12 @@ public class Player : MonoBehaviour, IDamageable
         }
 
     }
+
+    public void EndHit()
+    {
+        _animator.SetBool("IsHited", false);
+    }
+
 
     private void OnCollisionEnter2D(Collision2D other) //Detect collision
     {
