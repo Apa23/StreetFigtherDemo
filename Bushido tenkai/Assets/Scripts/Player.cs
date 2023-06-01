@@ -13,9 +13,19 @@ public class Player : MonoBehaviour, IDamageable
     // Movement aux variables
     private bool _canJump = false;
 
+    // Attack aux variables
+    [SerializeField]
+    private int _maxCombo = 0;
+    private int _comboCount = 0;
+    private float _lastAttack = 0;
+    private float _maxComboDelay = 0.8f;
+
+
     // Attack point reference
-    public Transform attackPoint;
-    public float attackRange = 0.5f;
+    [SerializeField]
+    private Transform _attackPoint;
+    [SerializeField]
+    private float _attackRange = 0.5f;
     public LayerMask enemyLayer;
 
     // Input Interface attributes
@@ -88,9 +98,18 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (Time.time - _lastAttack > _maxComboDelay)
+        {
+            _comboCount = 0;
+            _animator.SetBool("IsAttacking", false);
+            _animator.SetInteger("ComboAttack", _comboCount);
 
+        }
+        if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f && _animator.GetCurrentAnimatorStateInfo(0).IsName("HitAnimation"))
+        {
+            _animator.SetBool("IsHited", false);
 
-
+        }
     }
 
     private void FixedUpdate()
@@ -142,7 +161,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
             _animator.SetBool("Dash", true);
-            _dash = new Vector2(transform.position.x + 50, 0) * Time.deltaTime;
+            _dash = new Vector2(transform.position.x + 5, 0) * Time.deltaTime;
         }
     }
     private void CheckDashBackward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
@@ -150,7 +169,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
             _animator.SetBool("Dash", true);
-            _dash = new Vector2(transform.position.x - 50, 0) * Time.deltaTime;
+            _dash = new Vector2(transform.position.x - 5, 0) * Time.deltaTime;
         }
     }
 
@@ -161,7 +180,6 @@ public class Player : MonoBehaviour, IDamageable
 
     private void DashEnd()
     {
-        Debug.Log("Dash End");
         _dash = Vector2.zero;
         _animator.SetBool("Dash", false);
     }
@@ -184,18 +202,33 @@ public class Player : MonoBehaviour, IDamageable
 
     private void CheckAttack() //Detect attack and active the animation
     {
-
         if (_animator.GetBool("IsAttacking") == false)
         {
+            _lastAttack = Time.time;
+            _comboCount++;
             _animator.SetBool("IsAttacking", true);
-            _animator.SetInteger("ComboAttack", 1);
+            _animator.SetInteger("ComboAttack", _comboCount);
             _move = Vector2.zero;
+        }
+        else
+        {
+            _comboCount++;
+            if (_comboCount > _maxCombo)
+            {
+                return;
+            }
+            if (_comboCount >= 2 && _animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.3f)
+            {
+                _lastAttack = Time.time;
+                _comboCount = Mathf.Clamp(_comboCount, 0, _maxCombo);
+                _animator.SetInteger("ComboAttack", _comboCount);
+            }
         }
     }
 
     private void ActionAttack()
     {
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
 
         foreach (Collider2D enemy in hitEnemys)
         {
@@ -205,11 +238,6 @@ public class Player : MonoBehaviour, IDamageable
             }
         }
     }
-    private void AttackEnd()
-    {
-        Debug.Log("Attack End");
-        _animator.SetBool("IsAttacking", false);
-    }
 
     public void TakeHit() // Decrese the health points when hitted
     {
@@ -217,8 +245,11 @@ public class Player : MonoBehaviour, IDamageable
         {
             return;
         }
+        if (!_animator.GetBool("IsHited"))
+        {
+            _animator.SetBool("IsHited", true);
+        }
 
-        _animator.SetBool("IsHited", true);
         HealthPoints--;
         _animator.SetInteger("HP", HealthPoints);
         if (HealthPoints <= 0)
@@ -247,7 +278,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null) return;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if (_attackPoint == null) return;
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 }
