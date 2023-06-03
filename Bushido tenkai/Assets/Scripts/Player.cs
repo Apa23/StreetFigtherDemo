@@ -19,11 +19,15 @@ public class Player : MonoBehaviour, IDamageable
     private int _comboCount = 0;
     private float _lastAttack = 0;
     private float _maxComboDelay = 0.8f;
+    [SerializeField]
+    private int _attackDamage = 0;
+
 
 
     // Attack point reference
     [SerializeField]
     private Transform _attackPoint;
+
     [SerializeField]
     private float _attackRange = 0.5f;
     public LayerMask enemyLayer;
@@ -31,7 +35,11 @@ public class Player : MonoBehaviour, IDamageable
     // Input Interface attributes
     private PlayerControls _playerControls;
     private Vector2 _move;
-    private Vector2 _dash;
+
+    // Dash aux variables
+    private float _dashPower = 10f;
+    private float _dashingTime = 0.2f;
+    private float _dashingCooldown = 1f;
 
     // Animator component
     [Header("Animation")]
@@ -39,6 +47,7 @@ public class Player : MonoBehaviour, IDamageable
 
     // Rigidbody component
     private Rigidbody2D _rb2D;
+
 
 
     private void Awake()
@@ -56,14 +65,15 @@ public class Player : MonoBehaviour, IDamageable
             // Dash input and callbacks
             _playerControls.Gameplay.DashForward.performed += ctx => CheckDashForward();
             _playerControls.Gameplay.DashBackward.performed += ctx => CheckDashBackward();
-            _playerControls.Gameplay.DashForward.canceled += ctx => _dash = Vector2.zero;
-            _playerControls.Gameplay.DashBackward.canceled += ctx => _dash = Vector2.zero;
 
             // Jump input
             _playerControls.Gameplay.Jump.performed += ctx => CheckJump();
 
             // Attack input
             _playerControls.Gameplay.Attack.performed += ctx => CheckAttack();
+
+            _playerControls.Gameplay.SpecialAttack.performed += ctx => CheckSpecialAttack();
+
         }
         else if (gameObject.name == "Player2")
         {
@@ -75,14 +85,14 @@ public class Player : MonoBehaviour, IDamageable
             // Dash input and callbacks
             _playerControls.Gameplay2.DashForward.performed += ctx => CheckDashForward();
             _playerControls.Gameplay2.DashBackward.performed += ctx => CheckDashBackward();
-            _playerControls.Gameplay2.DashForward.canceled += ctx => _dash = Vector2.zero;
-            _playerControls.Gameplay2.DashBackward.canceled += ctx => _dash = Vector2.zero;
 
             // Jump input
             _playerControls.Gameplay2.Jump.performed += ctx => CheckJump();
 
             // Attack input
             _playerControls.Gameplay2.Attack.performed += ctx => CheckAttack();
+
+            _playerControls.Gameplay2.SpecialAttack.performed += ctx => CheckSpecialAttack();
         }
 
     }
@@ -121,7 +131,6 @@ public class Player : MonoBehaviour, IDamageable
             ActionJump();
         }
         ActionMove();
-        ActionDash();
 
     }
 
@@ -156,31 +165,37 @@ public class Player : MonoBehaviour, IDamageable
         _animator.SetFloat("Speed", Mathf.Abs(dir.x));
     }
 
-    private void CheckDashForward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    private void CheckDashForward()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+        if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
-            _animator.SetBool("Dash", true);
-            _dash = new Vector2(transform.position.x + 5, 0) * Time.deltaTime;
+            Debug.Log("Check dash");
+            StartCoroutine(ActionDash(1));
         }
     }
-    private void CheckDashBackward()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    private void CheckDashBackward()
     {
-        if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
+        if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
-            _animator.SetBool("Dash", true);
-            _dash = new Vector2(transform.position.x - 5, 0) * Time.deltaTime;
+            Debug.Log("Check dash");
+            StartCoroutine(ActionDash(-1));
         }
     }
 
-    private void ActionDash()// Move player on X axis when the input si higher than 0 and actives/stop the animation
+    private IEnumerator ActionDash(int direction)// Move player on X axis when the input si higher than 0 and actives/stop the animation
     {
-        transform.Translate(_dash, Space.World);
+        Debug.Log("Dash");
+        _animator.SetBool("Dash", true);
+        _rb2D.velocity = new Vector2(_dashPower * direction, 0f);
+        yield return new WaitForSeconds(_dashingTime);
+        _rb2D.velocity = new Vector2(0f, 0f);
+        _animator.SetBool("Dash", false);
+        yield return new WaitForSeconds(_dashingCooldown);
+
     }
 
     private void DashEnd()
     {
-        _dash = Vector2.zero;
         _animator.SetBool("Dash", false);
     }
 
@@ -234,12 +249,18 @@ public class Player : MonoBehaviour, IDamageable
         {
             if (enemy.transform.TryGetComponent(out IDamageable targetHit))
             {
-                targetHit.TakeHit();
+                targetHit.TakeHit(_attackDamage);
             }
         }
     }
 
-    public void TakeHit() // Decrese the health points when hitted
+    private void CheckSpecialAttack()
+    {
+        Debug.Log("CheckSpecialAttack");
+    }
+
+
+    public void TakeHit(int damage) // Decrese the health points when hitted
     {
         if (HealthPoints <= 0)
         {
@@ -250,11 +271,10 @@ public class Player : MonoBehaviour, IDamageable
             _animator.SetBool("IsHited", true);
         }
 
-        HealthPoints--;
+        HealthPoints -= damage;
         _animator.SetInteger("HP", HealthPoints);
         if (HealthPoints <= 0)
         {
-
             _playerControls.Gameplay.Disable();
             _playerControls.Gameplay2.Disable();
             return;

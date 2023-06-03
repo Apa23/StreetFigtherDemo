@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""MultiTap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""1173c7fb-d5f3-4ece-9c58-e0415b6aa55e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Dash Backward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Charge"",
+                    ""id"": ""9bb2a462-bcbc-4eaa-a01c-2bdf11ea4ffb"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""35d7324d-4fc1-4558-ae85-2c020c95ed0a"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/button5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""b48072cc-01f9-40cc-a613-f3eca8d876bc"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/button4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -179,6 +221,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""MultiTap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc57f570-3664-4406-99fd-aaf5137367db"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,7 +269,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a9d9b3b2-f2c8-4483-9e3f-2f8945ca54dc"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -229,7 +280,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3833efa5-d1ad-49ee-89c3-cfaa3887a02a"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -258,6 +309,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Dash Backward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Charge"",
+                    ""id"": ""0c354768-d566-4f2d-9b2e-9bedb6301f90"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""a9a2526f-bb50-4f04-8051-b534c98ec521"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""f22ac494-abfa-4275-9c55-627d74b61c24"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -271,6 +355,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_DashForward = m_Gameplay.FindAction("Dash Forward", throwIfNotFound: true);
         m_Gameplay_DashBackward = m_Gameplay.FindAction("Dash Backward", throwIfNotFound: true);
+        m_Gameplay_SpecialAttack = m_Gameplay.FindAction("SpecialAttack", throwIfNotFound: true);
         // Gameplay2
         m_Gameplay2 = asset.FindActionMap("Gameplay2", throwIfNotFound: true);
         m_Gameplay2_Move = m_Gameplay2.FindAction("Move", throwIfNotFound: true);
@@ -278,6 +363,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay2_Attack = m_Gameplay2.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay2_DashForward = m_Gameplay2.FindAction("Dash Forward", throwIfNotFound: true);
         m_Gameplay2_DashBackward = m_Gameplay2.FindAction("Dash Backward", throwIfNotFound: true);
+        m_Gameplay2_SpecialAttack = m_Gameplay2.FindAction("SpecialAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -344,6 +430,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_DashForward;
     private readonly InputAction m_Gameplay_DashBackward;
+    private readonly InputAction m_Gameplay_SpecialAttack;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -353,6 +440,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @DashForward => m_Wrapper.m_Gameplay_DashForward;
         public InputAction @DashBackward => m_Wrapper.m_Gameplay_DashBackward;
+        public InputAction @SpecialAttack => m_Wrapper.m_Gameplay_SpecialAttack;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -377,6 +465,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DashBackward.started += instance.OnDashBackward;
             @DashBackward.performed += instance.OnDashBackward;
             @DashBackward.canceled += instance.OnDashBackward;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -396,6 +487,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DashBackward.started -= instance.OnDashBackward;
             @DashBackward.performed -= instance.OnDashBackward;
             @DashBackward.canceled -= instance.OnDashBackward;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -422,6 +516,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay2_Attack;
     private readonly InputAction m_Gameplay2_DashForward;
     private readonly InputAction m_Gameplay2_DashBackward;
+    private readonly InputAction m_Gameplay2_SpecialAttack;
     public struct Gameplay2Actions
     {
         private @PlayerControls m_Wrapper;
@@ -431,6 +526,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Gameplay2_Attack;
         public InputAction @DashForward => m_Wrapper.m_Gameplay2_DashForward;
         public InputAction @DashBackward => m_Wrapper.m_Gameplay2_DashBackward;
+        public InputAction @SpecialAttack => m_Wrapper.m_Gameplay2_SpecialAttack;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay2; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -455,6 +551,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DashBackward.started += instance.OnDashBackward;
             @DashBackward.performed += instance.OnDashBackward;
             @DashBackward.canceled += instance.OnDashBackward;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
         }
 
         private void UnregisterCallbacks(IGameplay2Actions instance)
@@ -474,6 +573,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DashBackward.started -= instance.OnDashBackward;
             @DashBackward.performed -= instance.OnDashBackward;
             @DashBackward.canceled -= instance.OnDashBackward;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
         }
 
         public void RemoveCallbacks(IGameplay2Actions instance)
@@ -498,6 +600,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnDashForward(InputAction.CallbackContext context);
         void OnDashBackward(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
     }
     public interface IGameplay2Actions
     {
@@ -506,5 +609,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnDashForward(InputAction.CallbackContext context);
         void OnDashBackward(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
     }
 }
