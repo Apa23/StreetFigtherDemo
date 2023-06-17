@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio; //para poder usar audio
 
-public class MenuOpciones : MonoBehaviour
+public class OptionsMenu : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer; //serializar con metodo de audio que ya creamos
     public void PantallaCompleta (bool pantallaCompleta)
