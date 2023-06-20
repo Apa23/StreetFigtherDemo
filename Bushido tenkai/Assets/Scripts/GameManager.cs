@@ -5,6 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
+    private void Awake(){
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Update(){
         if (Input.GetKeyDown(KeyCode.Space)) //si oprimo espacio, abro menu
         {
@@ -15,6 +27,11 @@ public class GameManager : MonoBehaviour
             HandleInitialmenuState();
         }
     }
+
+    public void GoToMenu(){
+        HandleInitialmenuState();
+    }
+
 // dentro del juego se tienen 4 estados:
 // el estado para cambiar el personaje
     //void HandleCharacterState{
