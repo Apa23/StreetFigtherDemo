@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//Acá toca poner el nombre de la escena de elegir jugador
+
 
 
 public class InitialMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     public void Jugar()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.GoToSelect();
         //Acá toca poner el nombre de la escena de elegir jugador, aun en construccion
 
     }

@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
     // Damageable Interface attributes
     [field: SerializeField]
     public int TotalHealthPoints { get; private set; }
+    [field: SerializeField]
     public int HealthPoints { get; private set; }
+    
+
+    
+    
 
     // Movement aux variables
     private bool _canJump = false;
@@ -120,6 +126,9 @@ public class Player : MonoBehaviour, IDamageable
             _animator.SetBool("IsHited", false);
 
         }
+
+       
+
     }
 
     private void FixedUpdate()

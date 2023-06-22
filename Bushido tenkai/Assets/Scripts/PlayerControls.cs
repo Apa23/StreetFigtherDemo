@@ -344,6 +344,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UiNavigation"",
+            ""id"": ""0b1c202b-68d5-4e63-9c8e-1f4066a6355a"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangeCharacterRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1dc10e9-723a-4587-884a-ef034e2cf7a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeCharacterLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""79085d64-7951-4db9-a532-063d88cf8a42"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f5680f1-ff3b-4c66-bdbc-f3a63560e701"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1ac082f-677c-4b5d-abe7-7bc2a3726a9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d75e7a58-a366-4275-a9f3-f33f383073a8"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeCharacterRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4ba604c6-a092-480d-a677-e21bbcfd1558"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeCharacterLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62ef2fcf-3f79-4f13-a4bf-323ad2a9e25c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""979014d5-ae06-4c0d-bee6-f81fb796ca6b"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -364,6 +452,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay2_DashForward = m_Gameplay2.FindAction("Dash Forward", throwIfNotFound: true);
         m_Gameplay2_DashBackward = m_Gameplay2.FindAction("Dash Backward", throwIfNotFound: true);
         m_Gameplay2_SpecialAttack = m_Gameplay2.FindAction("SpecialAttack", throwIfNotFound: true);
+        // UiNavigation
+        m_UiNavigation = asset.FindActionMap("UiNavigation", throwIfNotFound: true);
+        m_UiNavigation_ChangeCharacterRight = m_UiNavigation.FindAction("ChangeCharacterRight", throwIfNotFound: true);
+        m_UiNavigation_ChangeCharacterLeft = m_UiNavigation.FindAction("ChangeCharacterLeft", throwIfNotFound: true);
+        m_UiNavigation_Submit = m_UiNavigation.FindAction("Submit", throwIfNotFound: true);
+        m_UiNavigation_Cancel = m_UiNavigation.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -593,6 +687,76 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public Gameplay2Actions @Gameplay2 => new Gameplay2Actions(this);
+
+    // UiNavigation
+    private readonly InputActionMap m_UiNavigation;
+    private List<IUiNavigationActions> m_UiNavigationActionsCallbackInterfaces = new List<IUiNavigationActions>();
+    private readonly InputAction m_UiNavigation_ChangeCharacterRight;
+    private readonly InputAction m_UiNavigation_ChangeCharacterLeft;
+    private readonly InputAction m_UiNavigation_Submit;
+    private readonly InputAction m_UiNavigation_Cancel;
+    public struct UiNavigationActions
+    {
+        private @PlayerControls m_Wrapper;
+        public UiNavigationActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ChangeCharacterRight => m_Wrapper.m_UiNavigation_ChangeCharacterRight;
+        public InputAction @ChangeCharacterLeft => m_Wrapper.m_UiNavigation_ChangeCharacterLeft;
+        public InputAction @Submit => m_Wrapper.m_UiNavigation_Submit;
+        public InputAction @Cancel => m_Wrapper.m_UiNavigation_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_UiNavigation; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UiNavigationActions set) { return set.Get(); }
+        public void AddCallbacks(IUiNavigationActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UiNavigationActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UiNavigationActionsCallbackInterfaces.Add(instance);
+            @ChangeCharacterRight.started += instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.performed += instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.canceled += instance.OnChangeCharacterRight;
+            @ChangeCharacterLeft.started += instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.performed += instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.canceled += instance.OnChangeCharacterLeft;
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IUiNavigationActions instance)
+        {
+            @ChangeCharacterRight.started -= instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.performed -= instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.canceled -= instance.OnChangeCharacterRight;
+            @ChangeCharacterLeft.started -= instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.performed -= instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.canceled -= instance.OnChangeCharacterLeft;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IUiNavigationActions instance)
+        {
+            if (m_Wrapper.m_UiNavigationActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUiNavigationActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UiNavigationActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UiNavigationActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UiNavigationActions @UiNavigation => new UiNavigationActions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -610,5 +774,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDashForward(InputAction.CallbackContext context);
         void OnDashBackward(InputAction.CallbackContext context);
         void OnSpecialAttack(InputAction.CallbackContext context);
+    }
+    public interface IUiNavigationActions
+    {
+        void OnChangeCharacterRight(InputAction.CallbackContext context);
+        void OnChangeCharacterLeft(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }
