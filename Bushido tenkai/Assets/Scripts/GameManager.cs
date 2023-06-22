@@ -6,40 +6,35 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static int player1CharacterIndex;
+    public static int player2CharacterIndex;
+    
 
     private void Awake(){
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.Space)) //si oprimo espacio, abro menu
-        {
-            HandleGameplayState();
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape)) //si oprimo
-        {
-            HandleInitialmenuState();
-        }
+ 
+    public void GoToSelect()
+    {
+        HandleSelectionState();
     }
-
     public void GoToMenu(){
+        Debug.Log("entrex2");
         HandleInitialmenuState();
     }
 
-// dentro del juego se tienen 4 estados:
-// el estado para cambiar el personaje
-    //void HandleCharacterState{
-    
-    
-// el estado del menu inicial (donde sale la interfaz principal y la de opciones)
-
-// el estado para jugar el round
+    public void GoToGame()
+    {
+        HandleGameplayState();
+    }
     void HandleGameplayState()
     {
         Debug.Log(message: "Cargando juego...");
@@ -51,17 +46,12 @@ public class GameManager : MonoBehaviour
         Debug.Log(message: "Cargando menú...");
         SceneManager.LoadScene("MenuInicial");
     }
-// el estado de muerte del personaje
-    // void HandleWinnerState{
 
-    
-
- //otros estados
-    // void LoadGame{
-
-    
-
-    // void SaveGame{
+    void HandleSelectionState()
+    {
+        Debug.Log(message: "Cargando selección de personajes...");
+        SceneManager.LoadScene("CharacterSelection");
+    }
 
     
 
