@@ -51,8 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd7772ee31fc342b41c58ab5b894c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 384
   _attackPoint: {fileID: 5907476472054094966}
-  _attackRange: 0.33
   _shootingPoint: {fileID: 0}
 --- !u!114 &5907476470983117210
 MonoBehaviour:
@@ -68,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalHealthPoints: 100
   MaxCombo: 3
-  AttackDamage: 15
+  AttackDamage: 10
   AttackRange: 0.33
   DashPower: 10
   Proyectile: {fileID: 0}

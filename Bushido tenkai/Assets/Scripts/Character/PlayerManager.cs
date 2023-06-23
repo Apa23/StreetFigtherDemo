@@ -23,11 +23,12 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private float _lastAttack;
     private float _maxComboDelay = 0.8f;
     private int _attackDamage;
+    public LayerMask enemyLayer;
+    private bool _righttoLeft = false;
 
     // Attack point reference
     [SerializeField]
     private Transform _attackPoint;
-    [SerializeField]
     private float _attackRange;
     [SerializeField]
     private GameObject _shootingPoint;
@@ -63,12 +64,11 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private void Start()
     {
         // Setting up atributes
-
         if (_config != null)
         {
             _maxCombo = _config.MaxCombo;
             _attackDamage = _config.AttackDamage;
-            //_attackRange = _config.AttackRange;
+            _attackRange = _config.AttackRange;
             _dashPower = _config.DashPower;
             HealthPoints = _config.TotalHealthPoints;
         }
@@ -132,11 +132,14 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
         if (_enemy.Enemy.transform.position.x < gameObject.transform.position.x)
         {
+
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            _righttoLeft = false;
         }
         else
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
+            _righttoLeft = true;
 
         }
 
@@ -265,10 +268,13 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void ActionAttack()
     {
-        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemy.gameObject.layer);
+        Debug.Log("Attack");
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
 
         foreach (Collider2D enemy in hitEnemys)
         {
+            Debug.Log(enemy);
+
             if (enemy.transform.TryGetComponent(out IDamageable targetHit))
             {
                 targetHit.TakeHit(_attackDamage);
@@ -279,6 +285,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     private void FireProyectile()
     {
         GameObject _proyectile = Instantiate(_config.Proyectile, _shootingPoint.transform.position, _shootingPoint.transform.rotation);
+        _proyectile.GetComponent<ProyectilManager>().setDirection(_righttoLeft);
     }
 
 
@@ -286,6 +293,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         if (HealthPoints <= 0)
         {
+            _animator.SetBool("IsHited", false);
             return;
         }
         if (!_animator.GetBool("IsHited"))
@@ -297,6 +305,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _animator.SetInteger("HP", HealthPoints);
         if (HealthPoints <= 0)
         {
+             _animator.SetBool("IsHited", false);
             _playerControls.Gameplay.Disable();
             _playerControls.Gameplay2.Disable();
             return;

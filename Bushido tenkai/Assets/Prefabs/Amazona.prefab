@@ -52,8 +52,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd7772ee31fc342b41c58ab5b894c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 384
   _attackPoint: {fileID: 2408090942836108085}
-  _attackRange: 0.3
   _shootingPoint: {fileID: 2408090943932196030}
 --- !u!114 &2408090942733885524
 MonoBehaviour:
@@ -72,7 +74,7 @@ MonoBehaviour:
   AttackDamage: 20
   AttackRange: 0.3
   DashPower: 10
-  Proyectile: {fileID: 4308222441378736914, guid: 7100d7ec5988aeb43889030026e1d5ce, type: 3}
+  Proyectile: {fileID: 8599681915163509729, guid: 7100d7ec5988aeb43889030026e1d5ce, type: 3}
 --- !u!61 &2408090942733885531
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -279,7 +281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2408090943932196030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.46, y: 1.04, z: 0.6965037}
+  m_LocalPosition: {x: 1.192, y: 0.552, z: 0.6965037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

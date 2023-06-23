@@ -2,54 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class CharacterSelection : MonoBehaviour
 {
     private PlayerControls _playerControls;
-    string CharacterName;
-    private int Player1Index = 0;
-    private int Player2Index = 4;
-    
-    private bool Player1Submited = false;//TEMPORAL//TEMPORAL
-    private bool Player2Submited = false;
-    [SerializeField] List<string> characterNames;
-    [SerializeField] List<Sprite> Images;
-    [Header("TextNames")]
-    [SerializeField] TMP_Text Character1;
-    [SerializeField] TMP_Text Character2;
-    [Header("Characters")]
-    [SerializeField] Image Sprite1;
-    [SerializeField] Image Sprite2;
-    [Header("ReadyPlayer")]
-    [SerializeField] GameObject Sprite3;
-    [SerializeField] GameObject Sprite4;
+    private string _characterName;
+    private int _player1Index = 0;
+    private int _player2Index = 4;
 
-    
-   
+    private bool _player1Submited = false;
+    private bool _player2Submited = false;
+    [SerializeField] private List<string> characterNames;
+    [SerializeField] private List<AnimatorController> _animations;
+    [Header("TextNames")]
+    [SerializeField] private TMP_Text _character1Name;
+    [SerializeField] private TMP_Text _character2Name;
+    [Header("Characters")]
+    [SerializeField] private Animator _character1Anim;
+    [SerializeField] private Animator _character2Anim;
+    [Header("ReadyPlayer")]
+    [SerializeField] private GameObject _readyPlayer1;
+    [SerializeField] private GameObject _readyPlayer2;
+
+
+
 
 
     private void Awake()
     {
         _playerControls = new PlayerControls();
 
-        //CONFIGURAR Y CAMBIAR AL UiNavigation2 
-
-        // _playerControls.UiNavigation2.ChangeCharacterRight.performed += ctx => ChangeCharacterRigh1t();//PLAYER1
-        //_playerControls.UiNavigation2.ChangeCharacterLeft.performed += ctx => ChangeCharacterLef1t1();//PLAYER1
-        //_playerControls.UiNavigation2.Submit.performed += ctx => Submit1();
-       // _playerControls.UiNavigation2.Cancel.performed += ctx => Cancel();
+        _playerControls.UiNavigation.ChangeCharacterRight.performed += ctx => ChangeCharacter1(1);
+        _playerControls.UiNavigation.ChangeCharacterLeft.performed += ctx => ChangeCharacter1(-1);
+        _playerControls.UiNavigation.Submit.performed += ctx => Submit1();
+        _playerControls.UiNavigation.Cancel.performed += ctx => Cancel1();
 
 
 
-        _playerControls.UiNavigation.ChangeCharacterRight.performed += ctx => ChangeCharacterRight2();//PLAYER2
-        _playerControls.UiNavigation.ChangeCharacterLeft.performed += ctx => ChangeCharacterLeft2();//PLAYER2
-        _playerControls.UiNavigation.Submit.performed += ctx => Submit2();
-        _playerControls.UiNavigation.Cancel.performed += ctx => Cancel();
-    }
-    void Start()
-    {
-
+        _playerControls.UiNavigation2.ChangeCharacterRight.performed += ctx => ChangeCharacter2(1);
+        _playerControls.UiNavigation2.ChangeCharacterLeft.performed += ctx => ChangeCharacter2(-1);
+        _playerControls.UiNavigation2.Submit.performed += ctx => Submit2();
+        _playerControls.UiNavigation2.Cancel.performed += ctx => Cancel2();
     }
 
 
@@ -57,139 +52,97 @@ public class CharacterSelection : MonoBehaviour
     {
 
         _playerControls.UiNavigation.Enable();
-
-
+        _playerControls.UiNavigation2.Enable();
 
     }
 
     private void OnDisable() //Disable input controls
     {
         _playerControls.UiNavigation.Disable();
+        _playerControls.UiNavigation2.Disable();
 
     }
     void Update()
     {
-        if (Player1Submited == true && Player2Submited == true)
+        if (_player1Submited && _player2Submited)
         {
-
-            GameManager.player1CharacterIndex = Player1Index;
-            GameManager.player2CharacterIndex = Player2Index;
             GameManager.Instance.GoToGame();
-
         }
     }
 
-    private void ChangeCharacterRight1()
+    private void ChangeCharacter1(int factor)
     {
-
-        Player1Index = Player1Index + 1;
-        if (Player1Index > 3)
+        if (!_player1Submited)
         {
-            Player1Index = 0;
-
+            _player1Index = _player1Index + factor;
+            if (_player1Index > 3)
+            {
+                _player1Index = 0;
+            }
+            else if (_player1Index < 0)
+            {
+                _player1Index = 3;
+            }
+            _character1Name.text = characterNames[_player1Index];
+            _character1Anim.runtimeAnimatorController = _animations[_player1Index];
+            GameManager.player1CharacterIndex = _player1Index;
         }
-        Character1.text = characterNames[Player1Index];
-        Sprite1.sprite = Images[Player1Index];
     }
 
-    private void ChangeCharacterLeft1()
+
+    private void ChangeCharacter2(int factor)
     {
-
-
-        Player1Index = Player1Index - 1;
-        if (Player1Index < 0)
+        if (!_player2Submited)
         {
-            Player1Index = 3;
-            
-
+            _player2Index = _player2Index + factor;
+            if (_player2Index > 3)
+            {
+                _player2Index = 0;
+            }
+            else if (_player2Index < 0)
+            {
+                _player2Index = 3;
+            }
+            _character2Name.text = characterNames[_player2Index];
+            _character2Anim.runtimeAnimatorController = _animations[_player2Index];
+            GameManager.player2CharacterIndex = _player2Index;
         }
-
-        Character1.text = characterNames[Player1Index];
-        Sprite1.sprite = Images[Player1Index];
-
     }
-
-    private void ChangeCharacterRight2()
-    {
-
-        Player2Index = Player2Index + 1;
-        if (Player2Index > 3)
-        {
-            Player2Index = 0;
-
-        }
-        Character2.text = characterNames[Player2Index];
-        Sprite2.sprite = Images[Player2Index];
-        Sprite2.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
-    }
-
-    private void ChangeCharacterLeft2()
-    {
-
-
-        Player2Index = Player2Index - 1;
-        if (Player2Index < 0)
-        {
-            Player2Index = 3;
-          
-
-        }
-
-        Character2.text = characterNames[Player2Index];
-        Sprite2.sprite = Images[Player2Index];
-        Sprite2.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
-
-    }
-
     private void Submit1()
-    {   //ACTIVAR
-       // _playerControls.UiNavigation2.ChangeCharacterLeft.Disable();
-        //_playerControls.UiNavigation2.ChangeCharacterRight.Disable();
-        Player1Submited = true;
-        Sprite3.SetActive(true);
-
+    {
+        _player1Submited = true;
+        _readyPlayer1.SetActive(true);
 
 
     }
     private void Submit2()
     {
-        _playerControls.UiNavigation.ChangeCharacterLeft.Disable();
-        _playerControls.UiNavigation.ChangeCharacterRight.Disable();
-        Player2Submited = true;
-        Sprite4.SetActive(true);
-
+        _player2Submited = true;
+        _readyPlayer2.SetActive(true);
     }
 
 
 
-    private void Cancel()
+    private void Cancel1()
     {
-        if (Player1Submited)
+        if (!_player1Submited && !_player2Submited)
         {
-            _playerControls.UiNavigation.ChangeCharacterLeft.Enable();
-            _playerControls.UiNavigation.ChangeCharacterRight.Enable();
-            Player1Submited = false;
-            Sprite3.SetActive(false);
-
-        }
-
-        else if (Player2Submited)
-        {
-            _playerControls.UiNavigation.ChangeCharacterLeft.Enable();
-            _playerControls.UiNavigation.ChangeCharacterRight.Enable();
-            Player2Submited = false;
-            Sprite4.SetActive(false);
-        }
-
-
-        else
-        {
-            Debug.Log("entre");
             GameManager.Instance.GoToMenu();
-
-            
         }
+        _player1Submited = false;
+        _readyPlayer1.SetActive(false);
     }
+    private void Cancel2()
+    {
+        if (!_player1Submited && !_player2Submited)
+        {
+            GameManager.Instance.GoToMenu();
+        }
+        _player2Submited = false;
+        _readyPlayer2.SetActive(false);
+    }
+
+
 
 }
 

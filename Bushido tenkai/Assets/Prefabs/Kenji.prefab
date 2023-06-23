@@ -113,8 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd7772ee31fc342b41c58ab5b894c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 384
   _attackPoint: {fileID: 514546031439432546}
-  _attackRange: 0.31
   _shootingPoint: {fileID: 0}
 --- !u!114 &514546032372392433
 MonoBehaviour:
@@ -128,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767c1dc245f48cb4e83bd8609f06866f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TotalHealthPoints: 100
+  TotalHealthPoints: 80
   MaxCombo: 2
   AttackDamage: 20
   AttackRange: 0.3

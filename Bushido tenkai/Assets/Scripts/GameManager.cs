@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public static int player1CharacterIndex;
-    public static int player2CharacterIndex;
-    
+    public static int player1CharacterIndex = 0;
+    public static int player2CharacterIndex = 3;
 
-    private void Awake(){
+
+    private void Awake()
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -21,13 +22,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
- 
+
     public void GoToSelect()
     {
         HandleSelectionState();
     }
-    public void GoToMenu(){
-        Debug.Log("entrex2");
+    public void GoToMenu()
+    {
         HandleInitialmenuState();
     }
 
@@ -37,22 +38,19 @@ public class GameManager : MonoBehaviour
     }
     void HandleGameplayState()
     {
-        Debug.Log(message: "Cargando juego...");
         SceneManager.LoadScene("GameScreen");
     }
 
     void HandleInitialmenuState()
     {
-        Debug.Log(message: "Cargando menú...");
-        SceneManager.LoadScene("MenuInicial");
+        SceneManager.LoadScene("InitialMenu");
     }
 
     void HandleSelectionState()
     {
-        Debug.Log(message: "Cargando selección de personajes...");
         SceneManager.LoadScene("CharacterSelection");
     }
 
-    
+
 
 }

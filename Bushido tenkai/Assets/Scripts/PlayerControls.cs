@@ -390,7 +390,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d75e7a58-a366-4275-a9f3-f33f383073a8"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/hat/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -401,7 +401,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4ba604c6-a092-480d-a677-e21bbcfd1558"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/hat/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -412,7 +412,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""62ef2fcf-3f79-4f13-a4bf-323ad2a9e25c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/button3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -423,7 +423,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""979014d5-ae06-4c0d-bee6-f81fb796ca6b"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<HID::Twin USB Gamepad      >/button2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -500,7 +500,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a6217b04-fd0e-4a80-a2d4-0e98a43d8928"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/j"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -511,7 +511,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cf178b63-4f81-4a29-b9b2-15ee5450cbe4"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
