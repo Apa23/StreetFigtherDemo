@@ -432,6 +432,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UiNavigation2"",
+            ""id"": ""163901f6-0d13-421f-953b-a6525e8fab82"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangeCharacterRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""e605a82b-3afb-462c-b2da-5aec8b3b2b9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeCharacterLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""34f867f2-286b-4259-8261-1c0b013cb1e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""130ff51f-f17e-42ce-a59d-e0417d488844"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""6303f7e5-0d02-4753-a720-846c9970f0de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2e8108b2-8449-4a51-8b4c-1af10d10165f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeCharacterRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a6d5999-673b-47ff-8f66-7ee8a6d9bddc"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeCharacterLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6217b04-fd0e-4a80-a2d4-0e98a43d8928"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf178b63-4f81-4a29-b9b2-15ee5450cbe4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -458,6 +546,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UiNavigation_ChangeCharacterLeft = m_UiNavigation.FindAction("ChangeCharacterLeft", throwIfNotFound: true);
         m_UiNavigation_Submit = m_UiNavigation.FindAction("Submit", throwIfNotFound: true);
         m_UiNavigation_Cancel = m_UiNavigation.FindAction("Cancel", throwIfNotFound: true);
+        // UiNavigation2
+        m_UiNavigation2 = asset.FindActionMap("UiNavigation2", throwIfNotFound: true);
+        m_UiNavigation2_ChangeCharacterRight = m_UiNavigation2.FindAction("ChangeCharacterRight", throwIfNotFound: true);
+        m_UiNavigation2_ChangeCharacterLeft = m_UiNavigation2.FindAction("ChangeCharacterLeft", throwIfNotFound: true);
+        m_UiNavigation2_Submit = m_UiNavigation2.FindAction("Submit", throwIfNotFound: true);
+        m_UiNavigation2_Cancel = m_UiNavigation2.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -757,6 +851,76 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UiNavigationActions @UiNavigation => new UiNavigationActions(this);
+
+    // UiNavigation2
+    private readonly InputActionMap m_UiNavigation2;
+    private List<IUiNavigation2Actions> m_UiNavigation2ActionsCallbackInterfaces = new List<IUiNavigation2Actions>();
+    private readonly InputAction m_UiNavigation2_ChangeCharacterRight;
+    private readonly InputAction m_UiNavigation2_ChangeCharacterLeft;
+    private readonly InputAction m_UiNavigation2_Submit;
+    private readonly InputAction m_UiNavigation2_Cancel;
+    public struct UiNavigation2Actions
+    {
+        private @PlayerControls m_Wrapper;
+        public UiNavigation2Actions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ChangeCharacterRight => m_Wrapper.m_UiNavigation2_ChangeCharacterRight;
+        public InputAction @ChangeCharacterLeft => m_Wrapper.m_UiNavigation2_ChangeCharacterLeft;
+        public InputAction @Submit => m_Wrapper.m_UiNavigation2_Submit;
+        public InputAction @Cancel => m_Wrapper.m_UiNavigation2_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_UiNavigation2; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UiNavigation2Actions set) { return set.Get(); }
+        public void AddCallbacks(IUiNavigation2Actions instance)
+        {
+            if (instance == null || m_Wrapper.m_UiNavigation2ActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UiNavigation2ActionsCallbackInterfaces.Add(instance);
+            @ChangeCharacterRight.started += instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.performed += instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.canceled += instance.OnChangeCharacterRight;
+            @ChangeCharacterLeft.started += instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.performed += instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.canceled += instance.OnChangeCharacterLeft;
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IUiNavigation2Actions instance)
+        {
+            @ChangeCharacterRight.started -= instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.performed -= instance.OnChangeCharacterRight;
+            @ChangeCharacterRight.canceled -= instance.OnChangeCharacterRight;
+            @ChangeCharacterLeft.started -= instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.performed -= instance.OnChangeCharacterLeft;
+            @ChangeCharacterLeft.canceled -= instance.OnChangeCharacterLeft;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IUiNavigation2Actions instance)
+        {
+            if (m_Wrapper.m_UiNavigation2ActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUiNavigation2Actions instance)
+        {
+            foreach (var item in m_Wrapper.m_UiNavigation2ActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UiNavigation2ActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UiNavigation2Actions @UiNavigation2 => new UiNavigation2Actions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -776,6 +940,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSpecialAttack(InputAction.CallbackContext context);
     }
     public interface IUiNavigationActions
+    {
+        void OnChangeCharacterRight(InputAction.CallbackContext context);
+        void OnChangeCharacterLeft(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IUiNavigation2Actions
     {
         void OnChangeCharacterRight(InputAction.CallbackContext context);
         void OnChangeCharacterLeft(InputAction.CallbackContext context);
