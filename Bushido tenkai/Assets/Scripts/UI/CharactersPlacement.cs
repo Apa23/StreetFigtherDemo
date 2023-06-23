@@ -20,11 +20,10 @@ public class CharactersPlacement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogWarning(_player1Index);
-        Debug.LogWarning(_player2Index);
+   
 
         // Instantiate the characters
-        GameObject Character1= Instantiate(CharacterPrefabs[_player1Index], SpawnPoint1.position, SpawnPoint1.rotation);
+        GameObject Character1 = Instantiate(CharacterPrefabs[_player1Index], SpawnPoint1.position, SpawnPoint1.rotation);
         GameObject Character2 = Instantiate(CharacterPrefabs[_player2Index], SpawnPoint2.position, SpawnPoint2.rotation);
 
         // Change the name of the characters instances
@@ -43,9 +42,12 @@ public class CharactersPlacement : MonoBehaviour
         Character1.layer = SpawnPoint1.gameObject.layer;
         Character2.layer = SpawnPoint2.gameObject.layer;
 
-        
+        GameManager.Player1Health = Character1.GetComponent<CharacterConfig>().TotalHealthPoints;
+        GameManager.Player2Health = Character2.GetComponent<CharacterConfig>().TotalHealthPoints;
 
+        GameManager.Instance.setInitialHealth();
+        
     }
 
-   
+
 }

@@ -12,8 +12,8 @@ public class OptionsMenu : MonoBehaviour
     TMP_Dropdown _dropdown;
 
     // Audio source variables
-    [SerializeField] 
-    private AudioSource _audioSource; 
+    [SerializeField]
+    private AudioSource _audioSource;
 
 
 
@@ -41,7 +41,6 @@ public class OptionsMenu : MonoBehaviour
         }
         if (_dropdown != null)
         {
-            Debug.Log("Dropdown");
             _dropdown.onValueChanged.AddListener(delegate
                    {
                        ChangeQuality(_dropdown.value);

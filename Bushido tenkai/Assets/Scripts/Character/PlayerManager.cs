@@ -59,7 +59,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _playerControls = new PlayerControls();
 
 
-
     }
     private void Start()
     {
@@ -194,7 +193,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
-            Debug.Log("Check dash");
             StartCoroutine(ActionDash(1));
         }
     }
@@ -202,14 +200,12 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
-            Debug.Log("Check dash");
             StartCoroutine(ActionDash(-1));
         }
     }
 
     private IEnumerator ActionDash(int direction)// Move player on X axis when the input si higher than 0 and actives/stop the animation
     {
-        Debug.Log("Dash");
         _animator.SetBool("Dash", true);
         _rb2D.velocity = new Vector2(_dashPower * direction, 0f);
         yield return new WaitForSeconds(_dashingTime);
@@ -268,13 +264,10 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void ActionAttack()
     {
-        Debug.Log("Attack");
         Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
 
         foreach (Collider2D enemy in hitEnemys)
         {
-            Debug.Log(enemy);
-
             if (enemy.transform.TryGetComponent(out IDamageable targetHit))
             {
                 targetHit.TakeHit(_attackDamage);
@@ -302,10 +295,23 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
 
         HealthPoints -= damage;
+
+        GameManager.Instance.ChangeHealth(HealthPoints, gameObject.name);
+
         _animator.SetInteger("HP", HealthPoints);
         if (HealthPoints <= 0)
         {
-             _animator.SetBool("IsHited", false);
+            if (gameObject.name == "Player1")
+            {
+                GameManager.Instance.SetWinner("Player 2");
+            }
+            else
+            {
+                GameManager.Instance.SetWinner("Player 1");
+            }
+
+
+            _animator.SetBool("IsHited", false);
             _playerControls.Gameplay.Disable();
             _playerControls.Gameplay2.Disable();
             return;
