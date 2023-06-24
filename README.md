@@ -25,3 +25,6 @@ El presente reositorio cuenta con el código fuente de un demo de un videojuego 
 Para ambos jugadores existen dos dinámicas especiales.
 1. Dashing: Un desplazamiento rápido hacia adelante o hacia atrás que se realiza cuando se presiona seguida y rapidamente dos veces una de las teclas de desplazamiento. Dos veces adelante -> Dash hacia adelante / Dos veces atras -> Dash hacia atras
 2. Ataque en combo: Despues de realizar un ataque es posible en cadenar otro seguido si se presiona nuevamente el botón de ataque en el preciso momento en que se conecta el golpe. Estos ataques encadenados realizan más daño pero de no coordinarse bien harán que el personaje quede bloqueado por un breve momento, haciendolo vulnerable.
+
+## Video demostración
+https://drive.google.com/drive/folders/1lybkvjbEiPHRvpdLvuIRu0z6lyi0jxJF?usp=drive_link
