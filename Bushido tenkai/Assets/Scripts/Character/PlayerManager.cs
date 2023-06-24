@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour, IDamageable
 {
+    // Character configuration variables
     public CharacterConfig Config => _config;
     private CharacterConfig _config;
 
+    // Enemy reference variable
     private EnemyReference _enemy;
 
     // Damageable Interface attributes
@@ -53,15 +55,13 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-
+        // Setting up configuration and input system
         _config = GetComponent<CharacterConfig>();
-
         _playerControls = new PlayerControls();
-
-
     }
     private void Start()
     {
+
         // Setting up atributes
         if (_config != null)
         {
@@ -113,25 +113,26 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
     }
 
-
-    // Update is called once per frame
     void Update()
     {
+        // Check time between attack and attack, restar combo count if threshold time is exceeded
         if (Time.time - _lastAttack > _maxComboDelay)
         {
             _comboCount = 0;
             _animator.SetBool("IsAttacking", false);
             _animator.SetInteger("ComboAttack", _comboCount);
-
         }
+
+        // Stop hit animation when is over
         if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f && _animator.GetCurrentAnimatorStateInfo(0).IsName("HitAnimation"))
         {
             _animator.SetBool("IsHited", false);
 
         }
+
+        // Check the position of the enemy and flip the direction if is at left side
         if (_enemy.Enemy.transform.position.x < gameObject.transform.position.x)
         {
-
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
             _righttoLeft = false;
         }
@@ -141,9 +142,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
             _righttoLeft = true;
 
         }
-
-
-
     }
 
     private void FixedUpdate()
@@ -154,6 +152,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
             // Performs jump
             ActionJump();
         }
+        // Performs move
         ActionMove();
 
     }
@@ -162,7 +161,6 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
 
         _playerControls.Gameplay.Enable();
-
         _playerControls.Gameplay2.Enable();
 
     }
@@ -189,14 +187,14 @@ public class PlayerManager : MonoBehaviour, IDamageable
         _animator.SetFloat("Speed", Mathf.Abs(dir.x));
     }
 
-    private void CheckDashForward()
+    private void CheckDashForward() // Check if is possible to dash forward
     {
         if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
             StartCoroutine(ActionDash(1));
         }
     }
-    private void CheckDashBackward()
+    private void CheckDashBackward() // Check if is possible to dash forward
     {
         if (!_animator.GetBool("Dash") && !_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack1Animation"))
         {
@@ -215,7 +213,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     }
 
-    private void DashEnd()
+    private void DashEnd() // Stop dash animation
     {
         _animator.SetBool("Dash", false);
     }
@@ -238,6 +236,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     private void CheckAttack() //Detect attack and active the animation
     {
+        // If is posible to attack execute animation and safe reference variables
         if (_animator.GetBool("IsAttacking") == false)
         {
             _lastAttack = Time.time;
@@ -248,6 +247,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
         else
         {
+            // Check if the como count is greater than the posible
             _comboCount++;
             if (_comboCount > _maxCombo)
             {
@@ -262,7 +262,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
     }
 
-    private void ActionAttack()
+    private void ActionAttack() // Check collitions with other objects and perform damage
     {
         Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
 
@@ -275,7 +275,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
     }
 
-    private void FireProyectile()
+    private void FireProyectile() // If the character has proyectile create a new proyectile
     {
         GameObject _proyectile = Instantiate(_config.Proyectile, _shootingPoint.transform.position, _shootingPoint.transform.rotation);
         _proyectile.GetComponent<ProyectilManager>().setDirection(_righttoLeft);
@@ -296,11 +296,13 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
         HealthPoints -= damage;
 
+        // When damage is diled, the health bar is automatically updated
         GameManager.Instance.ChangeHealth(HealthPoints, gameObject.name);
 
         _animator.SetInteger("HP", HealthPoints);
         if (HealthPoints <= 0)
         {
+            // When a health ponits is over show the winner screen 
             if (gameObject.name == "Player1")
             {
                 GameManager.Instance.SetWinner("Player 2");
@@ -319,11 +321,10 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     }
 
-    public void EndHit()
+    public void EndHit() // End hit animation
     {
         _animator.SetBool("IsHited", false);
     }
-
 
     private void OnCollisionEnter2D(Collision2D other) //Detect collision
     {
@@ -333,7 +334,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected() // Draw a gizmo in the attak point
     {
         if (_attackPoint == null) return;
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);

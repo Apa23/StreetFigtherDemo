@@ -5,16 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class InitialMenu : MonoBehaviour
 {
-    // On clicking play button
-    public void Play()
+    
+    public void Play() // On clicking play button
     {
-        // Load the next scene
+        // Load the character selection scene
         GameManager.Instance.GoToSelect();
     }
 
 
-    // On clicking exit button
-    public void Exit()
+    
+    public void Exit() // On clicking exit button stop game
     {
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

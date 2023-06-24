@@ -8,16 +8,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InitialMenu.unity
     guid: 7d5b204b9875f6e43943007189c2c00e
-  - enabled: 1
-    path: Assets/Scenes/GameScreen.unity
-    guid: 06362df399cc1d94d8a70c0073805e2b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Characters.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/CharacterSelection.unity
     guid: 7934b8caaceee184da319dc050549728
+  - enabled: 1
+    path: Assets/Scenes/GameScreen.unity
+    guid: 06362df399cc1d94d8a70c0073805e2b
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 93bfcfa81da0f224c9b7f43354a55066, type: 2}

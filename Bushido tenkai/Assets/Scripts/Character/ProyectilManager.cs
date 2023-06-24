@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class ProyectilManager : MonoBehaviour
 {
-
+    // Move direction
     private bool _right = true;
 
     private void Update()
     {
+        // Perform movement in the especific direction
         if (_right)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
@@ -21,14 +22,14 @@ public class ProyectilManager : MonoBehaviour
         }
     }
 
-    public void setDirection(bool right)
+    public void setDirection(bool right) // Set the direction
     {
         _right = right;
     }
 
     private void OnCollisionEnter2D(Collision2D other) //Detect collision
     {
-        if (other.collider.CompareTag("Player")) // When the player collides with the floor
+        if (other.collider.CompareTag("Player")) // When the player collides with the player deal damage
         {
             other.gameObject.GetComponent<PlayerManager>().TakeHit(20);
             Destroy(gameObject);

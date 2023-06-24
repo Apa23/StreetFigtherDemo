@@ -6,33 +6,28 @@ using TMPro;
 
 public class WinnerScreen : MonoBehaviour
 {
+    // Winner variable
     public string winner;
+
+    // Ui variable
     public TMP_Text WinnerLabel;
-    private void OnEnable()
+
+    private void OnEnable() // Set up winner name
     {
-        WinnerLabel.text = winner;
+        WinnerLabel.text = winner; 
     }
 
-    public void Rematch()
-    {
-        // Load the next scene
-        GameManager.Instance.GoToGame();
-    }
-
-    public void Reselect()
-    {
-        // Load the next scene
+    public void Reselect() // Load the character selection scene
+    {   
         GameManager.Instance.GoToSelect();
     }
 
-
-    // On clicking exit button
-    public void Exit()
+    public void Exit() // On clicking exit button stop game
     {
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#else
+    #else
         Application.Quit();
-#endif
+    #endif
     }
 }

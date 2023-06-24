@@ -42,8 +42,10 @@ public class CharactersPlacement : MonoBehaviour
         Character1.layer = SpawnPoint1.gameObject.layer;
         Character2.layer = SpawnPoint2.gameObject.layer;
 
+        // Set charecters health points
         GameManager.Player1Health = Character1.GetComponent<CharacterConfig>().TotalHealthPoints;
         GameManager.Player2Health = Character2.GetComponent<CharacterConfig>().TotalHealthPoints;
+        
 
         GameManager.Instance.setInitialHealth();
         

@@ -19,6 +19,7 @@ public class OptionsMenu : MonoBehaviour
 
     private void Start()
     {
+        // Set up variables
         _toggle = gameObject.GetComponentInChildren<Toggle>();
         _slider = gameObject.GetComponentInChildren<Slider>();
         _dropdown = gameObject.GetComponentInChildren<TMP_Dropdown>();
